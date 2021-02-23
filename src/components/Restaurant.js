@@ -8,9 +8,10 @@ import { Card, CardDeck } from "react-bootstrap";
 
 import Moment from "react-moment";
 
+import shadow from "leaflet/dist/images/marker-shadow.png";
+
 import marker from "leaflet/dist/images/marker-icon.png";
 
-import shadow from "leaflet/dist/images/marker-shadow.png";
 
 // ============================================================
 
@@ -138,7 +139,7 @@ const Restaurant = ({ id }) => {
                 <
                 Card.Body >
                 <
-                Card.Text > Unable to find Restaurant with id: { id } < /Card.Text> <
+                Card.Text > Cannot find Restaurant with id: { id } < /Card.Text> <
                 /Card.Body> <
                 /Card>
             )

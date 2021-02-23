@@ -1,38 +1,56 @@
 import React, { useState, useEffect } from "react";
+
 import { Card, Table, Pagination } from "react-bootstrap";
+
 import { useHistory } from "react-router-dom";
+
 import queryString from "query-string";
+
+// =============================================================
 
 const Restaurants = (props) => {
     const [restaurants, setRestaurants] = useState(null);
     const [page, setPage] = useState(1);
 
-    const history = useHistory();
+    // ======================================================
+
+    const Hist = useHistory();
     const query = queryString.parse(props.query).borough;
+
+    // ==========================================================
 
     const previousPage = () => {
         if (page <= 1) return;
         setPage(page - 1);
     };
 
+    // =====================================
+
     const nextPage = () => {
         setPage(page + 1);
     };
+
+    // =========================================================
 
     useEffect(() => {
         let uri = query ?
             `http://web422assi1.herokuapp.com/api/restaurants?page=${page}&perPage=10&borough=${query}` :
             `http://web422assi1.herokuapp.com/api/restaurants?page=${page}&perPage=10`;
+
         fetch(uri, {
-                method: "GET",
-                header: { "Content-Type": "application/json" },
-            })
-            .then((result) => result.json())
+            method: "GET",
+            header: { "Content-Type": "application/json" },
+        })
+
+        // ---------------------------------------------
+        .then((result) => result.json())
             .then((data) => {
                 setRestaurants(data);
             })
             .catch((error) => console.log(error));
     }, [query, page]);
+
+    // =======================================================================
 
     return ( <
         >
@@ -45,6 +63,7 @@ const Restaurants = (props) => {
         Card.Text > Full list of restaurants. < /Card.Text> <
         /Card.Body> <
         /Card>
+
 
         {
             restaurants !== null && restaurants.length > 0 ? ( <
@@ -64,7 +83,9 @@ const Restaurants = (props) => {
                     restaurants.map((restaurant) => ( <
                         tr key = { restaurant._id }
                         onClick = {
-                            () => history.push(`/restaurant/${restaurant._id}`) } >
+                            () => Hist.push(`/restaurant/${restaurant._id}`) }
+                        //=========================================================
+                        >
                         <
                         td > { restaurant.name } < /td> <
                         td > { restaurant.address.building } { restaurant.address.street } <
@@ -74,7 +95,9 @@ const Restaurants = (props) => {
                         /tr>
                     ))
                 } <
-                /tbody> <
+                /tbody>
+
+                <
                 /Table>
             ) : ( <
                 Card bg = "light"
@@ -87,6 +110,7 @@ const Restaurants = (props) => {
                 /Card>
             )
         }
+
 
         {
             restaurants !== null && restaurants.length > 0 && ( <
